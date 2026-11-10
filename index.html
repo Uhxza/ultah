@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spesial Untukmu ❤️</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        rose: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            300: '#fda4af',
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                        },
+                        cream: '#FFFDF9',
+                        softpink: '#FFEBF0',
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                        handwriting: ['"Caveat"', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Smooth Slide Scrolling & Layout Fixes */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FFFDF9;
+        }
+
+        .slide-container {
+            display: flex;
+            width: 400vw;
+            height: 100vh;
+            transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 1.5rem;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        /* Floating Hearts Layer */
+        #hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(251, 113, 133, 0.4);
+            animation: floatUp 8s linear infinite;
+            font-size: 1.2rem;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(105vh) scale(0.5) rotate(0deg);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.2) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Polaroid Effect */
+        .polaroid {
+            background: white;
+            padding: 12px 12px 24px 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            transform: rotate(-2deg);
+        }
+        .polaroid:hover {
+            transform: scale(1.05) rotate(0deg);
+            box-shadow: 0 20px 30px -10px rgba(244, 63, 94, 0.25);
+            z-index: 20;
+        }
+        .polaroid:nth-child(even) {
+            transform: rotate(3deg);
+        }
+
+        /* Shake animation for incorrect answer */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-10px); }
+            40%, 80% { transform: translateX(10px); }
+        }
+        .animate-shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        /* Custom Scrollbar for inner slide elements if needed */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 235, 240, 0.5);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(251, 113, 133, 0.5);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-cream text-gray-800 antialiased select-none">
+
+    <!-- Floating Background Hearts -->
+    <div id="hearts-container"></div>
+
+    <!-- Music Player Toggle Controls -->
+    <div class="fixed top-5 right-5 z-50 flex items-center gap-3">
+        <button id="musicToggle" onclick="toggleMusic()" class="flex items-center gap-2 bg-white/80 backdrop-blur-md px-4 py-2.5 rounded-full shadow-lg border border-rose-200 hover:bg-rose-50 transition-all text-rose-500 font-medium text-xs sm:text-sm">
+            <i id="musicIcon" class="fa-solid fa-music animate-pulse"></i>
+            <span id="musicText">Putar Musik 🎵</span>
+        </button>
+    </div>
+
+    <!-- HTML5 Audio Element for Nadhif Basalamah - Kota Ini Tak Sama Tanpamu -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="lagu.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Main Slide Track Container -->
+    <div class="slide-container" id="slideTrack">
+
+        <!-- SLIDE 1: WELCOME SCREEN -->
+        <section class="slide bg-gradient-to-br from-rose-50 via-cream to-softpink" id="slide1">
+            <div class="max-w-xl w-full text-center space-y-6 px-4">
+                <div class="inline-block relative">
+                    <div class="w-24 h-24 sm:w-28 sm:h-28 bg-rose-100 rounded-full flex items-center justify-center mx-auto shadow-inner border-2 border-rose-200">
+                        <i class="fa-solid fa-heart text-4xl sm:text-5xl text-rose-500 animate-bounce"></i>
+                    </div>
+                    <span class="absolute -top-1 -right-1 flex h-4 w-4">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-4 w-4 bg-rose-500"></span>
+                    </span>
+                </div>
+
+                <div class="space-y-2">
+                    <h2 class="text-rose-400 font-handwriting text-2xl sm:text-3xl">Hai Sayang ❤️</h2>
+                    <h1 class="text-3xl sm:text-5xl font-serif font-bold text-gray-800 leading-tight">
+                        Ada Kejutan Kecil Untukmu
+                    </h1>
+                </div>
+
+                <p class="text-gray-600 text-sm sm:text-base leading-relaxed max-w-md mx-auto">
+                    Aku membuat halaman spesial ini khusus untuk merayakan keindahan cerita kita. Siap untuk melihat momen manis bersama?
+                </p>
+
+                <div class="pt-4">
+                    <button onclick="goToSlide(2)" class="group relative inline-flex items-center justify-center px-8 py-3.5 text-base font-semibold text-white transition-all duration-300 ease-in-out bg-rose-500 rounded-full shadow-lg shadow-rose-300 hover:bg-rose-600 hover:shadow-rose-400 hover:-translate-y-0.5 active:translate-y-0">
+                        <span>Mulai Jelajahi</span>
+                        <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 2: GALERI MEMORI (POLAROID) -->
+        <section class="slide bg-cream" id="slide2">
+            <div class="max-w-4xl w-full text-center space-y-6 px-2 my-auto">
+                <div class="space-y-1">
+                    <h3 class="text-rose-500 font-handwriting text-2xl">Kenangan Manis Kita</h3>
+                    <h2 class="text-2xl sm:text-4xl font-serif font-bold text-gray-800">Setiap Detik Bersamamu Berharga</h2>
+                </div>
+
+                <!-- Grid Polaroid Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4 max-w-3xl mx-auto">
+                    <!-- Polaroid 1 -->
+                    <div class="polaroid rounded-lg">
+                        <div class="h-44 sm:h-52 bg-rose-100 rounded overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=600&auto=format&fit=crop" 
+                                 alt="Kenangan 1" class="w-full h-full object-cover" 
+                                 onerror="this.src='https://placehold.co/400x400/ffe4e6/f43f5e?text=Momen+Manis+1'">
+                        </div>
+                        <p class="font-handwriting text-xl text-gray-700 mt-3">Awal cerita indah kita ✨</p>
+                    </div>
+
+                    <!-- Polaroid 2 -->
+                    <div class="polaroid rounded-lg">
+                        <div class="h-44 sm:h-52 bg-rose-100 rounded overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=600&auto=format&fit=crop" 
+                                 alt="Kenangan 2" class="w-full h-full object-cover" 
+                                 onerror="this.src='https://placehold.co/400x400/ffe4e6/f43f5e?text=Momen+Manis+2'">
+                        </div>
+                        <p class="font-handwriting text-xl text-gray-700 mt-3">Tawa & Senyum Bahagia 🥰</p>
+                    </div>
+
+                    <!-- Polaroid 3 -->
+                    <div class="polaroid rounded-lg">
+                        <div class="h-44 sm:h-52 bg-rose-100 rounded overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=600&auto=format&fit=crop" 
+                                 alt="Kenangan 3" class="w-full h-full object-cover" 
+                                 onerror="this.src='https://placehold.co/400x400/ffe4e6/f43f5e?text=Momen+Manis+3'">
+                        </div>
+                        <p class="font-handwriting text-xl text-gray-700 mt-3">Langkah bersama ke depan 💖</p>
+                    </div>
+                </div>
+
+                <div class="pt-6 flex justify-center gap-4">
+                    <button onclick="goToSlide(1)" class="px-5 py-2.5 rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 transition text-sm">
+                        <i class="fa-solid fa-arrow-left mr-1"></i> Kembali
+                    </button>
+                    <button onclick="goToSlide(3)" class="px-6 py-2.5 rounded-full bg-rose-500 text-white font-semibold shadow-md hover:bg-rose-600 transition text-sm">
+                        Lanjut ke Quiz <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: QUIZ HARI JADIAN -->
+        <section class="slide bg-gradient-to-br from-softpink via-cream to-rose-50" id="slide3">
+            <div class="max-w-md w-full bg-white/90 backdrop-blur-md p-6 sm:p-8 rounded-3xl shadow-xl border border-rose-100 text-center space-y-6">
+                <div class="w-16 h-16 bg-rose-100 text-rose-500 rounded-2xl flex items-center justify-center mx-auto text-2xl shadow-sm">
+                    <i class="fa-solid fa-key"></i>
+                </div>
+
+                <div class="space-y-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-rose-400">Tantangan Kunci Rahasia</span>
+                    <h2 class="text-2xl sm:text-3xl font-serif font-bold text-gray-800">Uji Ingatan Ingatanmu 💭</h2>
+                    <p class="text-gray-600 text-sm">Jawab pertanyaan ini untuk membuka pesan rahasia yang tersimpan!</p>
+                </div>
+
+                <div class="bg-rose-50/80 p-4 rounded-2xl border border-rose-100">
+                    <p class="font-semibold text-rose-700 text-base">"Kapan Hari Jadian Kita?"</p>
+                </div>
+
+                <form onsubmit="handleQuizSubmit(event)" class="space-y-4">
+                    <div>
+                        <input type="text" id="quizInput" placeholder="Contoh: 1 September" 
+                               class="w-full px-4 py-3 rounded-xl border border-rose-200 focus:outline-none focus:ring-2 focus:ring-rose-400 text-center text-gray-700 placeholder-gray-400 font-medium">
+                    </div>
+
+                    <!-- Message Feedback Block -->
+                    <div id="quizError" class="hidden text-xs text-rose-500 font-medium bg-rose-50 p-2.5 rounded-lg border border-rose-200">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <button type="submit" class="w-full py-3.5 bg-rose-500 hover:bg-rose-600 text-white font-semibold rounded-xl shadow-md transition-all active:scale-95 flex items-center justify-center gap-2">
+                        <span>Buka Pesan Rahasia</span>
+                        <i class="fa-solid fa-lock-open text-xs"></i>
+                    </button>
+                </form>
+
+                <div class="pt-2">
+                    <button onclick="goToSlide(2)" class="text-xs text-gray-400 hover:text-gray-600 transition">
+                        <i class="fa-solid fa-arrow-left"></i> Kembali ke Galeri
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: SECRET LOVE LETTER (UNLOCKED) -->
+        <section class="slide bg-gradient-to-b from-rose-50 to-cream" id="slide4">
+            <div class="max-w-2xl w-full bg-white/95 backdrop-blur-md p-6 sm:p-10 rounded-3xl shadow-2xl border border-rose-200 text-left space-y-6 relative overflow-hidden my-auto max-h-[90vh] flex flex-col">
+                
+                <!-- Decorative Top Ribbon -->
+                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-rose-300 via-rose-500 to-rose-300"></div>
+
+                <div class="flex items-center justify-between border-b border-rose-100 pb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-500">
+                            <i class="fa-solid fa-envelope-open-text text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-serif font-bold text-gray-800 text-lg sm:text-xl">Surat Cinta Untukmu</h3>
+                            <p class="text-xs text-rose-400 font-medium">Terbuka khusus untuk kesayanganku ❤️</p>
+                        </div>
+                    </div>
+                    <span class="text-xs bg-rose-100 text-rose-600 px-3 py-1 rounded-full font-semibold">1 September ✨</span>
+                </div>
+
+                <!-- Letter Content Area with Typing Animation -->
+                <div class="overflow-y-auto pr-2 space-y-4 text-gray-700 leading-relaxed font-serif text-sm sm:text-base min-h-[220px]" id="letterContainer">
+                    <p id="typedText" class="whitespace-pre-wrap"></p>
+                </div>
+
+                <!-- Footer & Action Button -->
+                <div class="pt-4 border-t border-rose-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center gap-2 text-rose-500 font-handwriting text-2xl">
+                        <span>Forever & Always</span>
+                        <i class="fa-solid fa-heart text-sm animate-pulse"></i>
+                    </div>
+                    <button onclick="triggerConfetti()" class="w-full sm:w-auto px-6 py-2.5 bg-rose-500 text-white rounded-full font-semibold text-sm shadow-md hover:bg-rose-600 transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-sparkles"></i>
+                        <span>Rayakan Lagi 🎉</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Slide Navigation Dots (Bottom Fixed) -->
+    <div class="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 bg-white/70 backdrop-blur-md px-4 py-2 rounded-full border border-rose-100 shadow-sm">
+        <button onclick="goToSlide(1)" id="dot1" class="w-3 h-3 rounded-full bg-rose-500 transition-all"></button>
+        <button onclick="goToSlide(2)" id="dot2" class="w-3 h-3 rounded-full bg-rose-200 transition-all"></button>
+        <button onclick="goToSlide(3)" id="dot3" class="w-3 h-3 rounded-full bg-rose-200 transition-all"></button>
+        <button onclick="goToSlide(4)" id="dot4" class="w-3 h-3 rounded-full bg-rose-200 transition-all" disabled></button>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // App State
+        let currentSlide = 1;
+        let isUnlocked = false;
+        let isMusicPlaying = false;
+        let typingStarted = false;
+
+        // Surat Cinta Text
+        const secretMessage = `Terima kasih sudah hadir dan mewarnai setiap hariku dengan senyumanmu. 
+
+Sejak tanggal 1 September itu, dunia rasanya jadi jauh lebih hangat dan menyenangkan. Terima kasih telah memilihku, bersabar menghadapiku, dan selalu menjadi alasan terbaikku untuk tersenyum setiap hari.
+
+Semoga kita bisa terus berjalan berdampingan, melewati banyak hal manis bersama, dan merajut kisah indah selamanya.
+
+I love you more than words can say! ❤️✨`;
+
+        // Floating Hearts Generator
+        function createHearts() {
+            const container = document.getElementById('hearts-container');
+            const heartIcons = ['❤️', '💖', '💕', '🌸', '✨'];
+            
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                heart.style.animationDelay = (Math.random() * 5) + 's';
+                heart.style.fontSize = (Math.random() * 10 + 14) + 'px';
+                container.appendChild(heart);
+            }
+        }
+
+        // Navigation Slide Controller
+        function goToSlide(slideNum) {
+            // Guard: Cannot skip to slide 4 without answering quiz
+            if (slideNum === 4 && !isUnlocked) {
+                goToSlide(3);
+                return;
+            }
+
+            currentSlide = slideNum;
+            const track = document.getElementById('slideTrack');
+            track.style.transform = `translateX(-${(slideNum - 1) * 100}vw)`;
+
+            // Update Navigation Dots
+            for (let i = 1; i <= 4; i++) {
+                const dot = document.getElementById(`dot${i}`);
+                if (i === slideNum) {
+                    dot.className = "w-6 h-3 rounded-full bg-rose-500 transition-all";
+                } else {
+                    dot.className = "w-3 h-3 rounded-full bg-rose-200 transition-all";
+                }
+            }
+
+            // Start Typewriter effect when reaching Slide 4
+            if (slideNum === 4 && !typingStarted) {
+                typingStarted = true;
+                startTypewriter();
+                triggerConfetti();
+            }
+        }
+
+        // Quiz Logic
+        function handleQuizSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('quizInput').value.trim().toLowerCase();
+            const errorDiv = document.getElementById('quizError');
+            const quizContainer = document.querySelector('#slide3 > div');
+
+            // Accepted Answers Variants
+            const validAnswers = [
+                '1 september', 
+                '01 september', 
+                '1 sept', 
+                '01 sept', 
+                '1-september',
+                '01-september',
+                'satu september'
+            ];
+
+            if (validAnswers.includes(input)) {
+                isUnlocked = true;
+                errorDiv.classList.add('hidden');
+                document.getElementById('dot4').disabled = false;
+                
+                // Success feedback
+                confetti({
+                    particleCount: 50,
+                    spread: 60,
+                    origin: { y: 0.7 }
+                });
+
+                setTimeout(() => {
+                    goToSlide(4);
+                }, 400);
+
+            } else {
+                // Shake Animation & Cute Error Message
+                quizContainer.classList.add('animate-shake');
+                errorDiv.classList.remove('hidden');
+                
+                const cuteErrorMessages = [
+                    "Waduh, hampir tepat! Coba ingat-ingat lagi yuk sayang 😜",
+                    "Tetot! Salah hihi 😋 Clue: Awal bulan September!",
+                    "Masa lupa sih? Coba ketik '1 September' deh 😉"
+                ];
+                
+                errorDiv.innerText = cuteErrorMessages[Math.floor(Math.random() * cuteErrorMessages.length)];
+
+                setTimeout(() => {
+                    quizContainer.classList.remove('animate-shake');
+                }, 600);
+            }
+        }
+
+        // Typewriter Effect Function
+        function startTypewriter() {
+            const element = document.getElementById('typedText');
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < secretMessage.length) {
+                    element.innerHTML += secretMessage.charAt(i);
+                    i++;
+                    setTimeout(type, 35);
+                }
+            }
+            type();
+        }
+
+        // Confetti Fireworks Effect
+        function triggerConfetti() {
+            const count = 200;
+            const defaults = {
+                origin: { y: 0.7 }
+            };
+
+            function fire(particleRatio, opts) {
+                confetti(Object.assign({}, defaults, opts, {
+                    particleCount: Math.floor(count * particleRatio)
+                }));
+            }
+
+            fire(0.25, {
+                spread: 26,
+                startVelocity: 55,
+            });
+            fire(0.2, {
+                spread: 60,
+            });
+            fire(0.35, {
+                spread: 100,
+                decay: 0.91,
+                scalar: 0.8
+            });
+            fire(0.1, {
+                spread: 120,
+                startVelocity: 25,
+                decay: 0.92,
+                scalar: 1.2
+            });
+            fire(0.1, {
+                spread: 120,
+                startVelocity: 45,
+            });
+        }
+
+        // Background Music Control
+         isMusicPlaying = false;
+        const bgMusic = document.getElementById('bgMusic');
+
+        function toggleMusic() {
+            const musicText = document.getElementById('musicText');
+            const musicIcon = document.getElementById('musicIcon');
+
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                musicText.innerText = "Putar Musik 🎵";
+                musicIcon.className = "fa-solid fa-music";
+                isMusicPlaying = false;
+            } else {
+                bgMusic.play().then(() => {
+                    musicText.innerText = "Nadhif Basalamah - Kota Ini... 🎶";
+                    musicIcon.className = "fa-solid fa-compact-disc fa-spin";
+                    isMusicPlaying = true;
+                }).catch((err) => {
+                    console.log("Audio play blocked by browser:", err);
+                });
+            }
+        }
+
+        // Automatic audio activation on first user interaction to bypass mobile browser restrictions
+        document.addEventListener('click', function autoPlayOnFirstTouch() {
+            if (!isMusicPlaying && bgMusic) {
+                bgMusic.play().then(() => {
+                    isMusicPlaying = true;
+                    const musicText = document.getElementById('musicText');
+                    const musicIcon = document.getElementById('musicIcon');
+                    if (musicText && musicIcon) {
+                        musicText.innerText = "Nadhif Basalamah - Kota Ini... 🎶";
+                        musicIcon.className = "fa-solid fa-compact-disc fa-spin";
+                    }
+                }).catch(e => console.log(e));
+            }
+            document.removeEventListener('click', autoPlayOnFirstTouch);
+        }, { once: true });
+
+        // Touch Swipe Gesture Handler (For Mobile Support)
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeDistance = touchEndX - touchStartX;
+            if (Math.abs(swipeDistance) > 50) {
+                if (swipeDistance < 0 && currentSlide < (isUnlocked ? 4 : 3)) {
+                    // Swipe Left (Next)
+                    goToSlide(currentSlide + 1);
+                } else if (swipeDistance > 0 && currentSlide > 1) {
+                    // Swipe Right (Prev)
+                    goToSlide(currentSlide - 1);
+                }
+            }
+        }
+
+        // Initialize on Window Load
+        window.onload = function () {
+            createHearts();
+        }
+    </script>
+</body>
+</html>
